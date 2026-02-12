@@ -64,7 +64,7 @@ export const PipelineUI = () => {
               return;
             }
       
-            const position = reactFlowInstance.project({
+            const position = reactFlowInstance.screenToFlowPosition({
               x: event.clientX - reactFlowBounds.left,
               y: event.clientY - reactFlowBounds.top,
             });
@@ -80,7 +80,8 @@ export const PipelineUI = () => {
             addNode(newNode);
           }
         },
-        [reactFlowInstance]
+       [reactFlowInstance, getNodeID, addNode]
+
     );
 
     const onDragOver = useCallback((event) => {
@@ -90,7 +91,7 @@ export const PipelineUI = () => {
 
     return (
         <>
-        <div ref={reactFlowWrapper} style={{width: '100wv', height: '70vh'}}>
+        <div ref={reactFlowWrapper} style={{width: '100vw', height: '70vh'}}>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
