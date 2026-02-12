@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BaseNode } from './BaseNode';
+import { baseNode } from './baseNode';
 
 export const TextNode = ({ id, data }) => {
   const [currText, setCurrText] = useState(data?.text || '{{input}}');
@@ -9,7 +9,7 @@ export const TextNode = ({ id, data }) => {
   };
 
   return (
-    <BaseNode
+    <baseNode
       id={id}
       title="Text"
       inputs={[]}          // no left handles for now
@@ -23,6 +23,6 @@ export const TextNode = ({ id, data }) => {
           onChange={handleTextChange}
         />
       </label>
-    </BaseNode>
+    </baseNode>
   );
 };

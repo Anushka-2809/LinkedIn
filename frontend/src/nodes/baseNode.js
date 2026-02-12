@@ -1,6 +1,6 @@
 import { Handle, Position } from "reactflow";
 
-export const BaseNode = ({
+export const baseNode = ({
   id,
   title,
   inputs = [],
