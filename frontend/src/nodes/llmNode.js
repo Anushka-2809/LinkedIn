@@ -1,34 +1,29 @@
-// llmNode.js
-
-import { Handle, Position } from 'reactflow';
+import { useState } from "react";
+import { BaseNode } from "./BaseNode";
 
 export const LLMNode = ({ id, data }) => {
+  const [model, setModel] = useState(
+    data?.model || "gpt-3.5"
+  );
+
+  const handleChange = (e) => {
+    setModel(e.target.value);
+  };
 
   return (
-    <div style={{width: 200, height: 80, border: '1px solid black'}}>
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-system`}
-        style={{top: `${100/3}%`}}
-      />
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-prompt`}
-        style={{top: `${200/3}%`}}
-      />
-      <div>
-        <span>LLM</span>
-      </div>
-      <div>
-        <span>This is a LLM.</span>
-      </div>
-      <Handle
-        type="source"
-        position={Position.Right}
-        id={`${id}-response`}
-      />
-    </div>
+    <BaseNode
+      id={id}
+      title="LLM"
+      inputs={["prompt"]}        // left handle
+      outputs={["response"]}     // right handle
+    >
+      <label>
+        Model:
+        <select value={model} onChange={handleChange}>
+          <option value="gpt-3.5">GPT-3.5</option>
+          <option value="gpt-4">GPT-4</option>
+        </select>
+      </label>
+    </BaseNode>
   );
-}
+};

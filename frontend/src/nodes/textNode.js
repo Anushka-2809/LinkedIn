@@ -1,28 +1,28 @@
-import { useState } from 'react';
-import { baseNode } from './BaseNode';
+import { useState } from "react";
+import { BaseNode } from "./BaseNode";
 
 export const TextNode = ({ id, data }) => {
-  const [currText, setCurrText] = useState(data?.text || '{{input}}');
+  const [text, setText] = useState(
+    data?.text || ""
+  );
 
-  const handleTextChange = (e) => {
-    setCurrText(e.target.value);
+  const handleChange = (e) => {
+    setText(e.target.value);
   };
 
   return (
-    <baseNode
+    <BaseNode
       id={id}
       title="Text"
-      inputs={[]}          // no left handles for now
-      outputs={["output"]} // one right handle
+      inputs={["input"]}       // left handle
+      outputs={["output"]}     // right handle
     >
-      <label>
-        Text:
-        <input
-          type="text"
-          value={currText}
-          onChange={handleTextChange}
-        />
-      </label>
-    </baseNode>
+      <textarea
+        value={text}
+        onChange={handleChange}
+        placeholder="Enter text..."
+        style={{ width: "100%" }}
+      />
+    </BaseNode>
   );
 };
