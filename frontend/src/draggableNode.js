@@ -14,10 +14,10 @@ export const DraggableNode = ({ type, label }) => {
         onDragStart={(event) => onDragStart(event, type)}
         onDragEnd={(event) => (event.target.style.cursor = 'grab')}
         style={{ 
-          cursor: 'grab', 
-          minWidth: '80px', 
+          cursor: 'grab',
+          minWidth: '80px',
           height: '60px',
-          display: 'flex', 
+          display: 'flex',
           alignItems: 'center', 
           borderRadius: '8px',
           backgroundColor: '#1C2536',

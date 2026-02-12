@@ -64,7 +64,7 @@ export const PipelineUI = () => {
               return;
             }
       
-            const position = reactFlowInstance.screenToFlowPosition({
+            const position = reactFlowInstance.project({
               x: event.clientX - reactFlowBounds.left,
               y: event.clientY - reactFlowBounds.top,
             });

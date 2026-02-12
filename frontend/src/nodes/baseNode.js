@@ -1,11 +1,11 @@
 import { Handle, Position } from "reactflow";
 
-export const baseNode = ({
+export const BaseNode = ({
   id,
   title,
   inputs = [],
   outputs = [],
-  children
+  children,
 }) => {
   return (
     <div
@@ -15,8 +15,8 @@ export const baseNode = ({
         border: "1px solid black",
         borderRadius: 8,
         padding: 10,
-        backgroundColor: "white",
-        position: "relative"
+        backgroundColor: "lightblue",
+        position: "relative",
       }}
     >
       {/* Node Title */}

@@ -1,19 +1,21 @@
 import { useState } from "react";
-import { BaseNode } from "./baseNode";
+import { BaseNode } from "./BaseNode";
 
 export const InputNode = ({ id, data }) => {
-  const [inputName, setInputName] = useState(data?.inputName || "input");
+  const [inputName, setInputName] = useState(
+    data?.inputName || "input"
+  );
 
   const handleChange = (e) => {
     setInputName(e.target.value);
   };
 
   return (
-    <baseNode
+    <BaseNode
       id={id}
       title="Input"
-      inputs={[]}              // no left handle
-      outputs={["output"]}     // one right handle
+      inputs={[]}               // No left handles
+      outputs={["output"]}      // One right handle
     >
       <label>
         Name:
@@ -23,6 +25,6 @@ export const InputNode = ({ id, data }) => {
           onChange={handleChange}
         />
       </label>
-    </baseNode>
+    </BaseNode>
   );
 };
