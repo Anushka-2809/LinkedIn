@@ -1,13 +1,94 @@
+/* ---------- Global ---------- */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", sans-serif;
+  background-color: #f4f6f8;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* ---------- React Flow Background ---------- */
+.react-flow__background {
+  background-color: #f4f6f8;
+}
+
+/* ---------- Toolbar ---------- */
+.toolbar {
+  background: white;
+  padding: 18px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Draggable Buttons ---------- */
+.draggable-node {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: white;
+  cursor: grab;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.draggable-node:hover {
+  background-color: #eef2ff;
+  border-color: #6366f1;
+  transform: translateY(-1px);
+}
+
+/* ---------- Base Node Card ---------- */
+.base-node {
+  width: 230px;
+  min-height: 100px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  padding: 14px;
+}
+
+/* ---------- Node Title ---------- */
+.node-title {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: #374151;
+}
+
+/* ---------- Inputs / Select / Textarea ---------- */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+/* ---------- Submit Button ---------- */
+.submit-button {
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.submit-button:hover {
+  background-color: #4f46e5;
 }
