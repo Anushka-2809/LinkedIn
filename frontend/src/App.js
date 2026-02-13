@@ -1,66 +1,42 @@
 import React, { useState } from "react";
-import { PipelineToolbar } from "./toolbar"; // Named import from toolbar.js
-import Node from "./Node"; // Default import from Node.js (must exist in src/)
+import ReactFlow, { addEdge, Background } from "react-flow-renderer";
+import { PipelineToolbar } from "./toolbar";
+import CustomNode from "./CustomNode"; // new node component with minimize/maximize
+
+let id = 0;
+const getId = () => `node_${id++}`;
 
 function App() {
   const [nodes, setNodes] = useState([]);
+  const [edges, setEdges] = useState([]);
 
-  // Add a new node when toolbar button is clicked
+  const onConnect = (params) => setEdges((eds) => addEdge(params, eds));
+
   const addNode = (type) => {
     const newNode = {
-      id: Date.now(),
-      type,
-      title: `${type} Node`,
-      value: ""
+      id: getId(),
+      type: "custom",
+      data: { label: type },
+      position: { x: 100 + id * 20, y: 100 + id * 20 },
     };
-    setNodes([...nodes, newNode]);
-  };
-
-  // Update node input value
-  const handleChange = (id, value) => {
-    setNodes(
-      nodes.map((node) => (node.id === id ? { ...node, value } : node))
-    );
-  };
-
-  // Submit nodes
-  const handleSubmit = () => {
-    console.log("Nodes submitted:", nodes);
-    alert("Check console for submitted node data!");
+    setNodes((nds) => nds.concat(newNode));
   };
 
   return (
-    <div>
-      {/* Toolbar */}
+    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
       <PipelineToolbar addNode={addNode} />
 
-      {/* Node cards */}
-      <div
-        style={{
-          padding: "20px",
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "20px"
-        }}
-      >
-        {nodes.map((node) => (
-          <Node key={node.id} title={node.title}>
-            <input
-              type="text"
-              value={node.value}
-              placeholder="Enter value"
-              onChange={(e) => handleChange(node.id, e.target.value)}
-            />
-          </Node>
-        ))}
+      <div style={{ flex: 1 }}>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onConnect={onConnect}
+          nodeTypes={{ custom: CustomNode }}
+          fitView
+        >
+          <Background color="#aaa" gap={16} />
+        </ReactFlow>
       </div>
-
-      {/* Submit Button */}
-      {nodes.length > 0 && (
-        <button className="submit-button" onClick={handleSubmit}>
-          Submit
-        </button>
-      )}
     </div>
   );
 }
