@@ -1,72 +1,111 @@
-/* ---------- Global ---------- */
-body {
+/* ================= GLOBAL ================= */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", sans-serif;
-  background-color: #f4f6f8;
 }
 
-/* ---------- React Flow Background ---------- */
-.react-flow__background {
-  background-color: #f4f6f8;
+body {
+  background: linear-gradient(180deg, #eef2ff 0%, #f8faff 100%);
+  color: #1e293b;
 }
 
-/* ---------- Toolbar ---------- */
+/* ================= CANVAS ================= */
+.react-flow {
+  background: radial-gradient(circle at 25% 25%, #eef2ff, #f8faff 60%);
+}
+
+/* ================= TOOLBAR ================= */
 .toolbar {
-  background: white;
-  padding: 18px 24px;
-  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(90deg, #ffffff, #f8faff);
+  padding: 20px 30px;
+  border-bottom: 1px solid #e0e7ff;
   display: flex;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.08);
 }
 
-/* ---------- Draggable Buttons ---------- */
+/* ================= DRAG BUTTONS ================= */
 .draggable-node {
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid #dbeafe;
   background: white;
   cursor: grab;
   font-weight: 500;
-  transition: all 0.2s ease;
+  font-size: 14px;
+  color: #1e3a8a;
+  transition: all 0.25s ease;
 }
 
 .draggable-node:hover {
-  background-color: #eef2ff;
-  border-color: #6366f1;
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.35);
+  transform: translateY(-2px);
 }
 
-/* ---------- Base Node Card ---------- */
+/* ================= NODE CARD ================= */
 .base-node {
   width: 230px;
-  min-height: 100px;
-  border-radius: 12px;
+  min-height: 110px;
+  border-radius: 16px;
   background: white;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e5e7eb;
-  padding: 14px;
+  border: 1px solid #e0e7ff;
+  padding: 16px;
+  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.15);
+  transition: all 0.25s ease;
 }
 
-/* ---------- Node Title ---------- */
+.base-node:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.22);
+}
+
+/* ================= NODE HEADER ================= */
 .node-title {
   font-weight: 600;
   font-size: 14px;
-  margin-bottom: 12px;
-  color: #374151;
+  margin-bottom: 14px;
+  color: #1e3a8a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* ---------- Inputs / Select / Textarea ---------- */
+/* Header Buttons */
+.node-title button {
+  background: #eef2ff;
+  border: none;
+  padding: 4px 8px;
+  margin-left: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #1e3a8a;
+  transition: all 0.2s ease;
+}
+
+.node-title button:hover {
+  background: #6366f1;
+  color: white;
+}
+
+/* ================= INPUTS ================= */
 input,
 textarea,
 select {
   width: 100%;
-  padding: 6px 8px;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #c7d2fe;
   font-size: 13px;
-  margin-top: 4px;
+  margin-top: 6px;
+  transition: all 0.2s ease;
 }
 
 input:focus,
@@ -74,21 +113,47 @@ textarea:focus,
 select:focus {
   outline: none;
   border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
-/* ---------- Submit Button ---------- */
+/* ================= SUBMIT BUTTON ================= */
 .submit-button {
-  margin: 20px;
-  padding: 10px 20px;
-  background-color: #6366f1;
+  margin: 24px;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
-  font-weight: 500;
-  transition: 0.2s ease;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.35);
 }
 
 .submit-button:hover {
-  background-color: #4f46e5;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(59, 130, 246, 0.45);
+}
+
+/* ================= REACT FLOW CONTROLS ================= */
+.react-flow__controls {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.18);
+}
+
+.react-flow__controls button {
+  background: white;
+  border-bottom: 1px solid #e0e7ff;
+}
+
+.react-flow__controls button:hover {
+  background: #e0e7ff;
+}
+
+/* ================= MINIMAP ================= */
+.react-flow__minimap {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.18);
 }

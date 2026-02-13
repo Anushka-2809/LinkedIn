@@ -7,7 +7,7 @@ const CustomNode = ({ data }) => {
     <div className="base-node" style={{ width: 200 }}>
       <div className="node-title">
         {data.label}
-        <div style={{ float: "right" }}>
+        <div>
           <button onClick={() => setMinimized(!minimized)}>
             {minimized ? "Max" : "Min"}
           </button>

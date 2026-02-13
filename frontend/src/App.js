@@ -1,44 +1,86 @@
-import React, { useState } from "react";
-import ReactFlow, { addEdge, Background } from "react-flow-renderer";
+import React, { useState, useCallback } from "react";
+import ReactFlow, {
+  Background,
+  Controls,
+  MiniMap,
+  addEdge,
+  useReactFlow,
+  ReactFlowProvider,
+} from "reactflow";
+
+import "reactflow/dist/style.css";
+
 import { PipelineToolbar } from "./toolbar";
-import CustomNode from "./CustomNode"; // new node component with minimize/maximize
+import CustomNode from "./CustomNode";
 
 let id = 0;
 const getId = () => `node_${id++}`;
 
-function App() {
+function FlowCanvas() {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
+  const { screenToFlowPosition } = useReactFlow();
 
-  const onConnect = (params) => setEdges((eds) => addEdge(params, eds));
+  const onConnect = useCallback(
+    (params) => setEdges((eds) => addEdge(params, eds)),
+    []
+  );
 
-  const addNode = (type) => {
-    const newNode = {
-      id: getId(),
-      type: "custom",
-      data: { label: type },
-      position: { x: 100 + id * 20, y: 100 + id * 20 },
-    };
-    setNodes((nds) => nds.concat(newNode));
-  };
+  const onDragOver = useCallback((event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }, []);
+
+  const onDrop = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      const type = event.dataTransfer.getData("application/reactflow");
+      if (!type) return;
+
+      const position = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
+
+      const newNode = {
+        id: getId(),
+        type: "custom",
+        position,
+        data: { label: type },
+      };
+
+      setNodes((nds) => nds.concat(newNode));
+    },
+    [screenToFlowPosition]
+  );
 
   return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-      <PipelineToolbar addNode={addNode} />
-
-      <div style={{ flex: 1 }}>
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onConnect={onConnect}
-          nodeTypes={{ custom: CustomNode }}
-          fitView
-        >
-          <Background color="#aaa" gap={16} />
-        </ReactFlow>
-      </div>
+    <div style={{ flex: 1 }}>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onConnect={onConnect}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
+        nodeTypes={{ custom: CustomNode }}
+        fitView
+      >
+        <MiniMap />
+        <Controls />
+        <Background gap={16} />
+      </ReactFlow>
     </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <ReactFlowProvider>
+      <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+        <PipelineToolbar />
+        <FlowCanvas />
+      </div>
+    </ReactFlowProvider>
+  );
+}
