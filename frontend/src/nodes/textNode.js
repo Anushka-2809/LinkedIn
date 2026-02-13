@@ -10,27 +10,29 @@ export const TextNode = ({ id, data }) => {
     const regex = /\{\{\s*([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\}\}/g;
     const matches = [];
     let match;
-
     while ((match = regex.exec(text)) !== null) {
       matches.push(match[1]);
     }
-
-    // Remove duplicates
-    return [...new Set(matches)];
+    return [...new Set(matches)]; // remove duplicates
   }, [text]);
 
   // ✅ Auto resize textarea
   useEffect(() => {
     if (textareaRef.current) {
+      // Height auto-resize
       textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height =
-        textareaRef.current.scrollHeight + "px";
+      textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
+
+      // Width auto-resize
+      textareaRef.current.style.width = "auto";
+      textareaRef.current.style.width = Math.min(
+        textareaRef.current.scrollWidth + 10,
+        300
+      ) + "px"; // max width 300px
     }
   }, [text]);
 
-  const handleChange = (e) => {
-    setText(e.target.value);
-  };
+  const handleChange = (e) => setText(e.target.value);
 
   return (
     <BaseNode
@@ -45,10 +47,15 @@ export const TextNode = ({ id, data }) => {
         onChange={handleChange}
         placeholder="Enter text... Use {{variable}}"
         style={{
-          width: "100%",
+          width: "auto",
+          minWidth: "100px",
+          maxWidth: "300px",
           resize: "none",
           overflow: "hidden",
           minHeight: "40px",
+          fontFamily: "inherit",
+          fontSize: "14px",
+          padding: "4px",
         }}
       />
     </BaseNode>
