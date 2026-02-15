@@ -12,6 +12,7 @@ import "reactflow/dist/style.css";
 
 import { PipelineToolbar } from "./toolbar";
 import CustomNode from "./CustomNode";
+import { submitPipeline } from "./submit";   // ✅ IMPORT SUBMIT FUNCTION
 
 let id = 0;
 const getId = () => `node_${id++}`;
@@ -56,7 +57,27 @@ function FlowCanvas() {
   );
 
   return (
-    <div style={{ flex: 1 }}>
+    <div style={{ flex: 1, position: "relative" }}>
+
+      {/* ✅ SUBMIT BUTTON */}
+      <button
+        onClick={() => submitPipeline(nodes, edges)}
+        style={{
+          position: "absolute",
+          top: 10,
+          right: 10,
+          zIndex: 10,
+          padding: "10px 15px",
+          background: "black",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        Submit
+      </button>
+
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -77,7 +98,13 @@ function FlowCanvas() {
 export default function App() {
   return (
     <ReactFlowProvider>
-      <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <PipelineToolbar />
         <FlowCanvas />
       </div>

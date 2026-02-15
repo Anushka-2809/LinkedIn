@@ -1,58 +1,41 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import List
 import networkx as nx
 
 app = FastAPI()
 
-# Allow frontend to access backend
+# Allow frontend to talk to backend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@app.get('/')
+@app.get("/")
 def read_root():
-    return {'Ping': 'Pong'}
+    return {"Ping": "Pong"}
 
 
-# -------- DATA MODELS --------
+@app.post("/pipelines/parse")
+def parse_pipeline(data: dict = Body(...)):
+    nodes = data.get("nodes", [])
+    edges = data.get("edges", [])
 
-class Node(BaseModel):
-    id: str
-    type: str
-    data: dict
-
-class Edge(BaseModel):
-    id: str
-    source: str
-    target: str
-
-class Pipeline(BaseModel):
-    nodes: List[Node]
-    edges: List[Edge]
-
-
-# -------- MAIN ENDPOINT --------
-
-@app.post('/pipelines/parse')
-def parse_pipeline(pipeline: Pipeline):
-    num_nodes = len(pipeline.nodes)
-    num_edges = len(pipeline.edges)
-
+    # Create directed graph
     G = nx.DiGraph()
 
     # Add nodes
-    for node in pipeline.nodes:
-        G.add_node(node.id)
+    for node in nodes:
+        G.add_node(node["id"])
 
     # Add edges
-    for edge in pipeline.edges:
-        G.add_edge(edge.source, edge.target)
+    for edge in edges:
+        G.add_edge(edge["source"], edge["target"])
 
+    num_nodes = len(G.nodes)
+    num_edges = len(G.edges)
     is_dag = nx.is_directed_acyclic_graph(G)
 
     return {
